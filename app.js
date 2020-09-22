@@ -1,3 +1,4 @@
+require('dotenv').config()
 const express = require('express');
 const bodyParser = require('body-parser');
 const path = require('path');
@@ -5,7 +6,9 @@ const cors = require('cors');
 const morgan = require('morgan');
 const Joi = require('joi');
 const _ = require('lodash/core');
-require('dotenv').config()
+const users = require('./routes/users');
+const sugars = require('./routes/sugars')
+
 
 const db = require('./config/database')
 
@@ -25,9 +28,9 @@ app.use(express.urlencoded({ extended: false }));
 
 app.get('/', (req, res) => res.send('This is the root index page...'))
 
-//users routes
-app.use('/users', require('./routes/users'))
-app.use('/sugars', require('./routes/sugars'))
+//incorporate routes
+app.use('/api/users', users)
+app.use('/api/sugars', sugars)
 
 //start server
 const PORT = process.env.PORT || 8080;
